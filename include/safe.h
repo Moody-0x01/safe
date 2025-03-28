@@ -3,13 +3,14 @@
 # include <stdlib.h>
 # include <string.h>
 # include <stdio.h>
+# include <stdbool.h>
 # include <assert.h>
 
-typedef struct s_string {
+typedef struct s_sstring {
 	char  *items;
 	size_t size;
 	size_t cap;
-} t_string;
+} t_sstring;
 
 typedef enum s_allocator_action
 {
@@ -37,10 +38,20 @@ typedef struct safe_allocator_s
 	size_t		count;
 } safe_allocator_t;
 
+// TOP LEVEL FUNCTIONS TO USE.
 void *salloc(size_t nbytes);
 void *sarealloc(void *ptr, size_t new);
 void safree(void *ptr);
-void sa_display(void);
-void sa_destroy(void);
+void sadisplay(void);
+void sadestroy(void);
+
 void *sarealloc(void *ptr, size_t new);
+sa_node_t *new_sa_node(size_t nbytes);
+void destroy_sa(safe_allocator_t *global_allocator);
+void release_sa_node(sa_node_t *node);
+void destroy_sa_node(safe_allocator_t *allocator, void *ptr);
+
+
+void	sstring_push(t_sstring *string, int c);
+void	string_join(t_sstring *string, t_sstring *other);
 #endif // SAFE_H

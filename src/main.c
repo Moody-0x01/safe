@@ -9,7 +9,10 @@
 
 int main()
 {
-	t_string string = {0};
+	char c;
+	t_sstring string = {0};
+	t_sstring Tot = {0};
+	int eof = 0;
 
 	for (;;)
 	{
@@ -19,26 +22,29 @@ int main()
 			memset(string.items, 0, string.cap);
 		for (;;)
 		{
-			if (string.size >= string.cap)
+			if (read(0, &c, 1) <= 0)
 			{
-				if (!string.cap) string.cap = 2;
-				else
-					string.cap *= 2;
-				string.items = sarealloc(string.items, string.cap);
-			}
-			if (read(0, string.items + string.size, 1) < 0)
-				break ;
-			if (string.items[string.size] == '\n')
-			{
-				string.items[string.size] = 0;
+				eof = 1;
 				break ;
 			}
-			string.size++;
+			sstring_push(&string, c);
+			if (string.items[string.size - 1] == '\n')
+			{
+				string.items[string.size - 1] = 0;
+				break ;
+			}
 		}
-		if (!strcmp(string.items, "quit"))
+		if (string.size > 0)
+		{
+			if (!strcmp(string.items, "quit"))
+				break ;
+			string_join(&Tot, &string);
+		}
+		if (eof)
 			break ;
-		printf("TYPED: `%s`\n", string.items);
 	}
-	sa_display();
+	write(1, Tot.items, Tot.size);
+	sadisplay();
+	sadestroy();
 	return (0);
 }
