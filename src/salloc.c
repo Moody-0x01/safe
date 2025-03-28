@@ -1,20 +1,22 @@
-# include <salloc.h>
+# include <safe.h>
 
 sa_node_t	*new_sa_node(size_t nbytes)
 {
 	sa_node_t *node;
 
 	node = calloc(1, sizeof(*node));
-	node->data = calloc(nbytes, sizeof(char));
+	node->data = malloc(nbytes);
+	memset(node->data, 0, nbytes);
 	node->size = nbytes;;
 	return (node);
 }
 
 static void	*allocator_station(t_allocator_action a, size_t nbytes, void *ptr)
 {
-	sa_node_t *node;
-	sa_node_t *next;
 	static safe_allocator_t	global_allocator;
+	sa_node_t *node;
+	sa_node_t *realoc;
+	sa_node_t *next;
 
 	switch (a)
 	{
@@ -80,6 +82,19 @@ static void	*allocator_station(t_allocator_action a, size_t nbytes, void *ptr)
 				node = node->next;
 			}
 		} break;
+		case REAL_NODE: {
+			if (ptr == NULL)
+				return allocator_station(ALLOCATE_NODE, nbytes, NULL);
+			allocator_station(ALLOCATE_NODE, nbytes, NULL);
+			node = global_allocator.tail;
+			realoc = global_allocator.head;
+			while (realoc && realoc->data != ptr)
+				realoc = realoc->next;
+			assert(realoc->data == ptr);
+			memcpy(node->data, realoc->data, realoc->size);
+			safree(ptr);
+			return (node->data);
+		}
 		default:
 			assert(0 && "What the fuck did u give to this function buddy");
 	}
@@ -104,4 +119,9 @@ void sa_display(void)
 void sa_destroy(void)
 {
 	allocator_station(DESTROY_ALLOCATOR, 0, NULL);
+}
+
+void *sarealloc(void *ptr, size_t new)
+{
+	return (allocator_station(REAL_NODE, new, ptr));
 }

@@ -1,29 +1,44 @@
-# include <salloc.h>
+# include <safe.h>
+#include <unistd.h>
+
+// typedef struct s_string {
+// 	char  *items;
+// 	size_t length;
+// 	size_t cap;
+// } s_string;
 
 int main()
 {
-	for (int i = 1; i < 100; ++i)
+	t_string string = {0};
+
+	for (;;)
 	{
-		char *nums = salloc(i * 10);
-		memset(nums, '*', (i * 10) - 1);
-		printf("BLOCK:\n%s\n", nums);
+		write(1, "> ", 2);
+		string.size = 0;
+		if (string.items)
+			memset(string.items, 0, string.cap);
+		for (;;)
+		{
+			if (string.size >= string.cap)
+			{
+				if (!string.cap) string.cap = 2;
+				else
+					string.cap *= 2;
+				string.items = sarealloc(string.items, string.cap);
+			}
+			if (read(0, string.items + string.size, 1) < 0)
+				break ;
+			if (string.items[string.size] == '\n')
+			{
+				string.items[string.size] = 0;
+				break ;
+			}
+			string.size++;
+		}
+		if (!strcmp(string.items, "quit"))
+			break ;
+		printf("TYPED: `%s`\n", string.items);
 	}
-
-	sa_display();
-	// safree(nums);
-	sa_destroy();
-	sa_display();
-
-	for (int i = 1; i < 100; ++i)
-	{
-		char *nums = salloc(i * 10);
-		memset(nums, '*', (i * 10) - 1);
-		printf("BLOCK:\n%s\n", nums);
-	}
-
-	sa_display();
-	// safree(nums);
-	sa_destroy();
 	sa_display();
 	return (0);
 }
