@@ -5,6 +5,7 @@
 # include <stdio.h>
 # include <stdbool.h>
 # include <assert.h>
+# include <ctype.h>
 
 typedef struct s_sstring {
 	char  *items;
@@ -45,13 +46,15 @@ void safree(void *ptr);
 void sadisplay(void);
 void sadestroy(void);
 
-void *sarealloc(void *ptr, size_t new);
-sa_node_t *new_sa_node(size_t nbytes);
-void destroy_sa(safe_allocator_t *global_allocator);
-void release_sa_node(sa_node_t *node);
-void destroy_sa_node(safe_allocator_t *allocator, void *ptr);
-
+sa_node_t	*new_sa_node(size_t nbytes);
+void	*sarealloc(void *ptr, size_t new);
+void	destroy_sa(safe_allocator_t *global_allocator);
+void	release_sa_node(sa_node_t *node);
+void	destroy_sa_node(safe_allocator_t *allocator, void *ptr);
 
 void	sstring_push(t_sstring *string, int c);
-void	string_join(t_sstring *string, t_sstring *other);
+void	sstring_push_front(t_sstring *string, int c);
+void	sstring_join(t_sstring *string, t_sstring *other);
+void	sstring_strip(t_sstring *string);
+void	sstring_cstrpush(t_sstring *string, const char *str);
 #endif // SAFE_H

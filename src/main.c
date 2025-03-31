@@ -1,13 +1,7 @@
 # include <safe.h>
 #include <unistd.h>
 
-// typedef struct s_string {
-// 	char  *items;
-// 	size_t length;
-// 	size_t cap;
-// } s_string;
-
-int main()
+void	simple_shell_test()
 {
 	char c;
 	t_sstring string = {0};
@@ -38,12 +32,26 @@ int main()
 		{
 			if (!strcmp(string.items, "quit"))
 				break ;
-			string_join(&Tot, &string);
+			sstring_join(&Tot, &string);
 		}
 		if (eof)
 			break ;
 	}
 	write(1, Tot.items, Tot.size);
+}
+
+int main(int _, char **argv)
+{
+	t_sstring	string = {0};
+	(void)_;
+	if (argv[1])
+	{
+		sstring_cstrpush(&string, argv[1]);
+		printf("|%s|\n", string.items);
+		sstring_strip(&string);
+		printf("|%s|\n", string.items);
+	}
+
 	sadisplay();
 	sadestroy();
 	return (0);
