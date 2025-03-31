@@ -7,30 +7,13 @@
 // h.count(          h.format_map(     h.isdigit()       h.istitle()       h.maketrans(      h.rindex(         h.splitlines(     h.upper()                           
 // h.encode(         h.index(          h.isidentifier()  h.isupper()       h.partition(      h.rjust(          h.startswith(     h.zfill(                            
 // h.endswith(       h.isalnum()       h.islower()       h.join(           h.removeprefix(   h.rpartition(     h.strip(                                              
-void	sstring_cstrpush(t_sstring *string, const char *str)
+static	void sstring_expand(t_sstring *string)
 {
-	while (str && *str)
+	if (string->cap == 0)
 	{
-		sstring_push(string, *str);
-		str++;
+		sstring_init(string);
+		return ;
 	}
-	string->items[string->size] = 0;
-}
-
-void	sstring_push(t_sstring *string, int c)
-{
-	if (string->size >= string->cap)
-	{
-		if (!string->cap) string->cap = 2;
-		else
-			string->cap *= 2;
-		string->items = sarealloc(string->items, string->cap);
-	}
-	string->items[string->size++] = c;
-}
-
-void	sstring_push_front(t_sstring *string, int c)
-{
 	if (string->size + 1 >= string->cap)
 	{
 		if (!string->cap) string->cap = 2;
@@ -38,6 +21,35 @@ void	sstring_push_front(t_sstring *string, int c)
 			string->cap *= 2;
 		string->items = sarealloc(string->items, string->cap);
 	}
+}
+
+void	sstring_init(t_sstring *string)
+{
+	string->cap = VEC_INIT_CAP;
+	string->size = 0;
+	string->items = sarealloc(string->items, string->cap);
+}
+
+void	sstring_cstrpush(t_sstring *string, const char *str)
+{
+	while (str && *str)
+	{
+		sstring_push(string, *str);
+		str++;
+	}
+	sstring_push(string, *str);
+	string->size--;
+}
+
+void	sstring_push(t_sstring *string, int c)
+{
+	sstring_expand(string);
+	string->items[string->size++] = c;
+}
+
+void	sstring_push_front(t_sstring *string, int c)
+{
+	sstring_expand(string);
 	memmove(string->items + 1, string->items + 0, string->size);
 	string->items[0] = c;
 	string->size++;
@@ -72,4 +84,27 @@ void	sstring_strip(t_sstring *string)
 	string->items[right + 1] = 0;
 }
 
-// TODO: capitalize
+
+void	sstring_upper(t_sstring *string)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < string->size)
+	{
+		string->items[i] = toupper(string->items[i]);
+		i++;
+	}
+}
+
+void	sstring_lower(t_sstring *string)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < string->size)
+	{
+		string->items[i] = tolower(string->items[i]);
+		i++;
+	}
+}

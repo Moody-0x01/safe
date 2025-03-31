@@ -1,6 +1,6 @@
 #include <safe.h>
 
-sa_node_t	*new_sa_node(size_t nbytes)
+sa_node_t	*sa_new_node(size_t nbytes)
 {
 	sa_node_t *node;
 
@@ -12,7 +12,7 @@ sa_node_t	*new_sa_node(size_t nbytes)
 	return (node);
 }
 
-void	release_sa_node(sa_node_t *node)
+void	sa_release_node(sa_node_t *node)
 {
 	if (node)
 	{

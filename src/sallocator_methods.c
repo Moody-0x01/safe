@@ -1,6 +1,6 @@
 #include <safe.h>
 
-void	destroy_sa(safe_allocator_t *global_allocator)
+void	sa_destroy(safe_allocator_t *global_allocator)
 {
 	sa_node_t	*node;
 	sa_node_t	*next;
@@ -11,14 +11,14 @@ void	destroy_sa(safe_allocator_t *global_allocator)
 		if (!node)
 			break ;
 		next = node->next;
-		release_sa_node(node);
+		sa_release_node(node);
 		global_allocator->head = next;
 		node = next;
 	}
 	memset(global_allocator, 0, sizeof(*global_allocator));
 }
 
-void	destroy_sa_node(safe_allocator_t *allocator, void *ptr)
+void	sa_destroy_node(safe_allocator_t *allocator, void *ptr)
 {
 	sa_node_t *node;
 	sa_node_t *next;
@@ -49,7 +49,69 @@ void	destroy_sa_node(safe_allocator_t *allocator, void *ptr)
 			node = next;
 		}
 	}
-	release_sa_node(node);
+	sa_release_node(node);
 	if (allocator->count)
 		allocator->count--;
+}
+
+void	*sa_append(safe_allocator_t *allocator, size_t nbytes)
+{
+	sa_node_t *node;
+
+	node = sa_new_node(nbytes);
+	if (!allocator->head)
+	{
+		allocator->head = node;
+		allocator->tail = node;
+	}
+	else {
+		allocator->tail->next = node;
+		allocator->tail = node;
+	}
+	allocator->count++;
+	return (node->data);
+}
+
+void	*sa_reappend_node(safe_allocator_t *allocator, void *old_ptr, size_t new_nbytes)
+{
+	sa_node_t *target_to_be_removed;
+	sa_node_t *node;
+
+	if (old_ptr == NULL)
+		return (sa_append(allocator, new_nbytes));
+	sa_append(allocator, new_nbytes);
+	node = allocator->tail;
+	target_to_be_removed = allocator->head;
+	while (target_to_be_removed && target_to_be_removed->data != old_ptr)
+		target_to_be_removed = target_to_be_removed->next;
+	if (!target_to_be_removed)
+	{
+		panicf("realloc: [Invalid pointer][Which: %p]\n"
+			"Possible reasons:\n"
+			"    - Allocd with malloc\n"
+			"    - Already freed\n", old_ptr);
+	}
+	if (new_nbytes < target_to_be_removed->size)
+		node->data = memcpy(node->data, old_ptr, new_nbytes);
+	else
+		node->data = memcpy(node->data, old_ptr, target_to_be_removed->size);
+	sa_destroy_node(allocator, old_ptr);
+	return (node->data);
+}
+
+void	sa_print(safe_allocator_t *allocator)
+{
+	sa_node_t *node;
+
+	printf("SIZE OF THE SALLOC TABLE: %zu\n", allocator->count);
+	node = allocator->head;
+	while (true)
+	{
+		if (!node)
+			break ;
+		assert(node->data);
+		printf("Ptr:        %p\n", node->data);
+		printf("Block size: %zu\n", node->size);
+		node = node->next;
+	}
 }

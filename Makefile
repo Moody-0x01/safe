@@ -1,7 +1,7 @@
 LIB_DIR=lib
 BIN_DIR=bin
 MAIN=./src/main.c
-SRCS=./src/salloc.c ./src/sstring.c ./src/sa_node_methods.c ./src/sallocator_methods.c
+SRCS=./src/salloc.c ./src/sstring.c ./src/sa_node_methods.c ./src/sallocator_methods.c ./src/panic.c
 OBJS=$(SRCS:%.c=%.o)
 SA=$(LIB_DIR)/libsa.a
 CC=cc

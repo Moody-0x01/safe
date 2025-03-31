@@ -7,7 +7,7 @@ void	simple_shell_test()
 	t_sstring string = {0};
 	t_sstring Tot = {0};
 	int eof = 0;
-
+	
 	for (;;)
 	{
 		write(1, "> ", 2);
@@ -38,21 +38,23 @@ void	simple_shell_test()
 			break ;
 	}
 	write(1, Tot.items, Tot.size);
-}
-
-int main(int _, char **argv)
-{
-	t_sstring	string = {0};
-	(void)_;
-	if (argv[1])
-	{
-		sstring_cstrpush(&string, argv[1]);
-		printf("|%s|\n", string.items);
-		sstring_strip(&string);
-		printf("|%s|\n", string.items);
-	}
-
 	sadisplay();
 	sadestroy();
+}
+
+int main()
+{
+	// t_sstring	string = {0};
+	// (void)_;
+	// if (argv[1])
+	// {
+	// 	sstring_cstrpush(&string, argv[1]);
+	// 	printf("|%s|\n", string.items);
+	// 	sstring_strip(&string);
+	// 	printf("|%s|\n", string.items);
+	// }
+	//
+	//
+	simple_shell_test();
 	return (0);
 }
