@@ -15,6 +15,13 @@ typedef struct s_sstring {
 	size_t cap;
 } t_sstring;
 
+typedef struct s_sstring_array
+{
+	t_sstring  *items;
+	size_t		size;
+	size_t		cap;
+} t_sstring_array;
+
 typedef enum s_allocator_action
 {
 	ALLOCATE_NODE = 0,
@@ -65,6 +72,9 @@ void	sstring_strip(t_sstring *string);
 void	sstring_cstrpush(t_sstring *string, const char *str);
 void	sstring_lower(t_sstring *string);
 void	sstring_upper(t_sstring *string);
-
+void	t_sstring_array_push_back(t_sstring_array *ssa, t_sstring *string);
+void	t_sstring_array_cstrpush_back(t_sstring_array *ssa, const char *cstr);
+void	sstring_split(t_sstring_array *array, t_sstring const *s, char c);
+void	sstring_split_with_slice(t_sstring_array *array, t_sstring const *s, const char *slice);
 void	panicf(const char *fmt, ...);
 #endif // SAFE_H
