@@ -1,5 +1,19 @@
 #include <safe.h>
 
+int	in(char c, const char *slice)
+{
+	size_t	i;
+
+	i = 0;
+	while (slice[i])
+	{
+		if (slice[i] == c)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 void	sstring_split(t_sstring_array *array, t_sstring const *s, char c)
 {
 	size_t		cursor;
@@ -24,20 +38,6 @@ void	sstring_split(t_sstring_array *array, t_sstring const *s, char c)
 		}
 		t_sstring_array_push_back(array, &str);
 	}
-}
-
-int	in(char c, const char *slice)
-{
-	size_t	i;
-
-	i = 0;
-	while (slice[i])
-	{
-		if (slice[i] == c)
-			return (1);
-		i++;
-	}
-	return (0);
 }
 
 void	sstring_split_with_slice(t_sstring_array *array, t_sstring const *s, const char *slice)

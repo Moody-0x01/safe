@@ -15,7 +15,7 @@ void	sa_destroy(safe_allocator_t *global_allocator)
 		global_allocator->head = next;
 		node = next;
 	}
-	memset(global_allocator, 0, sizeof(*global_allocator));
+	ft_memset(global_allocator, 0, sizeof(*global_allocator));
 }
 
 void	sa_destroy_node(safe_allocator_t *allocator, void *ptr)
@@ -92,9 +92,9 @@ void	*sa_reappend_node(safe_allocator_t *allocator, void *old_ptr, size_t new_nb
 			"    - Already freed\n", old_ptr);
 	}
 	if (new_nbytes < target_to_be_removed->size)
-		node->data = memcpy(node->data, old_ptr, new_nbytes);
+		node->data = ft_memcpy(node->data, old_ptr, new_nbytes);
 	else
-		node->data = memcpy(node->data, old_ptr, target_to_be_removed->size);
+		node->data = ft_memcpy(node->data, old_ptr, target_to_be_removed->size);
 	sa_destroy_node(allocator, old_ptr);
 	return (node->data);
 }

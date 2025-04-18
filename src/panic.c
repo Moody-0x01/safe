@@ -9,3 +9,10 @@ void	panicf(const char *fmt, ...)
 	sadestroy(); // @Cleanup
 	exit(1);
 }
+
+void	*salloc_check(const void *mem)
+{
+	if (!mem)
+		panicf("Buy Ram\n");
+	return ((void *)mem);
+}
