@@ -1,22 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew.c                                        :+:      :+:    :+:   */
+/*   ft_chop.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lazmoud <lazmoud@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/25 21:09:54 by lazmoud           #+#    #+#             */
-/*   Updated: 2024/10/25 21:27:21 by lazmoud          ###   ########.fr       */
+/*   Created: 2024/11/15 12:31:23 by lazmoud           #+#    #+#             */
+/*   Updated: 2024/11/15 14:41:08 by lazmoud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libft.h"
+#include <ft_printf.h>
 
-t_list	*ft_lstnew(void *content)
+int	chop(const char *fmt, size_t *index, char c)
 {
-	t_list	*new;
+	int	chopped;
 
-	new = salloc(sizeof(t_list));
-	new->content = content;
-	new->next = NULL;
-	return (new);
+	chopped = 0;
+	while (fmt[*index + chopped] == c && fmt[*index + chopped])
+		chopped++;
+	*index += chopped;
+	return (chopped);
 }

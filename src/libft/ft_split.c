@@ -66,7 +66,7 @@ static char	**ft_split_private(char **vec,
 		wlength = length_until(s, i, c);
 		if (wlength > 0)
 		{
-			vec[vec_idx] = salloc_check(salloc(wlength + 1));
+			vec[vec_idx] = salloc(wlength + 1);
 			while (k < wlength && s[i])
 				vec[vec_idx][k++] = s[i++];
 			vec[vec_idx++][k] = 0;
@@ -81,7 +81,7 @@ char	**ft_split(char const *s, char c)
 {
 	char	**vec;
 
-	vec = salloc_check(salloc(sizeof(char *) * (count_words(s, c) + 1)));
+	vec = salloc(sizeof(char *) * (count_words(s, c) + 1));
 	if (!vec)
 		return (NULL);
 	return (ft_split_private(vec, s, c, 0));

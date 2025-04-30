@@ -61,7 +61,7 @@ static char	*trim_core_private(size_t storage, char *start, char *end)
 	size_t	idx;
 
 	idx = 0;
-	new = salloc_check(salloc(storage + 1));
+	new = salloc(storage + 1);
 	if (!new)
 		return (NULL);
 	if (start == end)

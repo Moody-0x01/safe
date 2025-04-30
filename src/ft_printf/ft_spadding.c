@@ -1,22 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew.c                                        :+:      :+:    :+:   */
+/*   ft_spadding.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lazmoud <lazmoud@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/25 21:09:54 by lazmoud           #+#    #+#             */
-/*   Updated: 2024/10/25 21:27:21 by lazmoud          ###   ########.fr       */
+/*   Created: 2024/11/15 12:29:46 by lazmoud           #+#    #+#             */
+/*   Updated: 2024/11/15 15:04:10 by lazmoud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libft.h"
+#include <ft_printf.h>
 
-t_list	*ft_lstnew(void *content)
+void	ppad(int len, char byte, int *written)
 {
-	t_list	*new;
-
-	new = salloc(sizeof(t_list));
-	new->content = content;
-	new->next = NULL;
-	return (new);
+	while (len > 0)
+	{
+		ft_putchar(byte, written);
+		if (written)
+		{
+			if (*written == -1)
+				return ;
+		}
+		len--;
+	}
 }

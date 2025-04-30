@@ -1,22 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew.c                                        :+:      :+:    :+:   */
+/*   ft_io.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lazmoud <lazmoud@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/25 21:09:54 by lazmoud           #+#    #+#             */
-/*   Updated: 2024/10/25 21:27:21 by lazmoud          ###   ########.fr       */
+/*   Created: 2025/01/01 09:50:15 by lazmoud           #+#    #+#             */
+/*   Updated: 2025/01/01 10:22:41 by lazmoud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libft.h"
+#include <ft_printf.h>
 
-t_list	*ft_lstnew(void *content)
+int	ft_io(int fd)
 {
-	t_list	*new;
+	static int	io;
 
-	new = salloc(sizeof(t_list));
-	new->content = content;
-	new->next = NULL;
-	return (new);
+	if (fd == FD_INIT)
+		io = STDOUT_FILENO;
+	else if (fd == FD_GET)
+		return (io);
+	else
+		io = fd;
+	return (io);
 }

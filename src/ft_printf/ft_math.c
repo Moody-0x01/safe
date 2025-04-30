@@ -1,22 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew.c                                        :+:      :+:    :+:   */
+/*   ft_math.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lazmoud <lazmoud@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/25 21:09:54 by lazmoud           #+#    #+#             */
-/*   Updated: 2024/10/25 21:27:21 by lazmoud          ###   ########.fr       */
+/*   Created: 2024/11/16 16:33:44 by lazmoud           #+#    #+#             */
+/*   Updated: 2024/11/16 16:33:59 by lazmoud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libft.h"
+#include <ft_printf.h>
 
-t_list	*ft_lstnew(void *content)
+int	clamp(int x)
 {
-	t_list	*new;
-
-	new = salloc(sizeof(t_list));
-	new->content = content;
-	new->next = NULL;
-	return (new);
+	return (!(x < 0) * x);
 }

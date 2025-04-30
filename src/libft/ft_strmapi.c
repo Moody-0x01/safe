@@ -28,7 +28,7 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 
 	if (!s)
 		return (NULL);
-	mem = salloc_check(salloc(len(s) + 1));
+	mem = salloc(len(s) + 1);
 	if (!mem)
 		return (NULL);
 	idx = 0;

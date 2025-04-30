@@ -15,7 +15,7 @@ static char	*empty(void)
 {
 	char	*em;
 
-	em = salloc_check(salloc(1));
+	em = salloc(1);
 	if (!em)
 		return (NULL);
 	*em = 0;
@@ -43,7 +43,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		return (empty());
 	if (len > len_static(s + start))
 		len = len_static(s + start);
-	str = salloc_check(salloc(len + 1));
+	str = salloc(len + 1);
 	if (!str)
 		return (NULL);
 	i = 0;

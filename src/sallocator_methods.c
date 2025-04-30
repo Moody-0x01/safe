@@ -103,15 +103,15 @@ void	sa_print(safe_allocator_t *allocator)
 {
 	sa_node_t *node;
 
-	printf("SIZE OF THE SALLOC TABLE: %zu\n", allocator->count);
+	ft_printf("SIZE OF THE SALLOC TABLE: %zu\n", allocator->count);
 	node = allocator->head;
 	while (true)
 	{
 		if (!node)
 			break ;
 		assert(node->data);
-		printf("Ptr:        %p\n", node->data);
-		printf("Block size: %zu\n", node->size);
+		ft_printf("Ptr:        %p\n", node->data);
+		ft_printf("Block size: %zu\n", node->size);
 		node = node->next;
 	}
 }

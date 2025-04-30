@@ -41,7 +41,7 @@ char	*ft_strdup(const char *s1)
 	size_t	size;
 
 	size = ft_strlen_static(s1);
-	dup = salloc_check(salloc(size + 1));
+	dup = salloc(size + 1);
 	if (!dup)
 		return (NULL);
 	dup = ft_strcpy_static(dup, s1);

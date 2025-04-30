@@ -1,22 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew.c                                        :+:      :+:    :+:   */
+/*   ft_cprint.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lazmoud <lazmoud@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/25 21:09:54 by lazmoud           #+#    #+#             */
-/*   Updated: 2024/10/25 21:27:21 by lazmoud          ###   ########.fr       */
+/*   Created: 2024/11/16 18:19:49 by lazmoud           #+#    #+#             */
+/*   Updated: 2024/11/16 18:25:32 by lazmoud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libft.h"
+#include <ft_printf.h>
 
-t_list	*ft_lstnew(void *content)
+void	__cprintf(t_fstate *state)
 {
-	t_list	*new;
+	char	literal;
+	int		length;
 
-	new = salloc(sizeof(t_list));
-	new->content = content;
-	new->next = NULL;
-	return (new);
+	length = 1;
+	literal = va_arg(state->args, int);
+	if (length > state->flags.perc && state->flags.detected & DOT_BIT)
+		length = state->flags.perc;
+	ppad(state->flags.pos_width - 1, ' ', &state->written);
+	ft_putchar(literal, &state->written);
+	ppad(state->flags.neg_width - 1, ' ', &state->written);
 }

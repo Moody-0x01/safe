@@ -32,7 +32,7 @@ static char	*fill_number(unsigned long num, int n, int digcount)
 {
 	char			*ascii;
 
-	ascii = salloc_check(salloc(digcount + 1));
+	ascii = salloc(digcount + 1);
 	if (!ascii)
 		return (NULL);
 	ascii[digcount--] = 0;

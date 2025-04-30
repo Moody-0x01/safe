@@ -39,39 +39,39 @@ void	simple_shell_test()
 		if (eof)
 			break ;
 	}
-	printf("===========(Joined)===========\n");
+	ft_printf("===========(Joined)===========\n");
 	write(1, Tot.items, Tot.size);
-	printf("===========(======)===========\n");
-	printf("===========(Collected)===========\n");
+	ft_printf("===========(======)===========\n");
+	ft_printf("===========(Collected)===========\n");
 	for (size_t i = 0; i < strings.size; i++)
 	{
 		write(1, strings.items[i].items, strings.items[i].size);
-		printf("\n");
+		ft_printf("\n");
 	}
-	printf("===========(======)===========\n");
+	ft_printf("===========(======)===========\n");
 	// sadisplay();
 	sadestroy();
 }
 
-int main(int _, char **argv)
+int main()
 {
-	t_sstring	string = {0};
-	(void)_;
-	if (argv[1])
-	{
-		t_sstring_array array;
-
-		sstring_cstrpush(&string, argv[1]);
-		sstring_split_with_slice(&array, &string, "<|>");
-		printf("Split `%s` using <|> \n", string.items);
-		for (size_t i = 0; i < array.size; i++)
-		{
-			printf("[  %zu  ] \n", i);
-			printf("%s\n", array.items[i].items);
-			// write(1, , array.items[i].size);
-		}
-		sadestroy();
-	}
-	// simple_shell_test();
+	// t_sstring	string = {0};
+	// (void)_;
+	// if (argv[1])
+	// {
+	// 	t_sstring_array array;
+	//
+	// 	sstring_cstrpush(&string, argv[1]);
+	// 	sstring_split_with_slice(&array, &string, "<|>");
+	// 	printf("Split `%s` using <|> \n", string.items);
+	// 	for (size_t i = 0; i < array.size; i++)
+	// 	{
+	// 		printf("[  %zu  ] \n", i);
+	// 		printf("%s\n", array.items[i].items);
+	// 		// write(1, , array.items[i].size);
+	// 	}
+	// 	sadestroy();
+	// }
+	simple_shell_test();
 	return (0);
 }

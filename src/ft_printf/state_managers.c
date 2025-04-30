@@ -1,22 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew.c                                        :+:      :+:    :+:   */
+/*   state_managers.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lazmoud <lazmoud@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/25 21:09:54 by lazmoud           #+#    #+#             */
-/*   Updated: 2024/10/25 21:27:21 by lazmoud          ###   ########.fr       */
+/*   Created: 2025/03/24 16:08:04 by lazmoud           #+#    #+#             */
+/*   Updated: 2025/03/24 16:08:05 by lazmoud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libft.h"
 
-t_list	*ft_lstnew(void *content)
+#include <ft_printf.h>
+
+void	init_state(t_fstate *state, int fd, const char *fmt)
 {
-	t_list	*new;
+	ft_memset(state, 0, sizeof(*state));
+	state->fmt = fmt;
+	ft_io(fd);
+}
 
-	new = salloc(sizeof(t_list));
-	new->content = content;
-	new->next = NULL;
-	return (new);
+void	clean_up_state(t_fstate *state)
+{
+	va_end(state->args);
+	ft_io(STDOUT_FILENO);
 }

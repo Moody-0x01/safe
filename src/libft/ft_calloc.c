@@ -33,7 +33,7 @@ void	*ft_calloc(size_t count, size_t size)
 	void	*mem;
 
 	storage = count * size;
-	mem = salloc_check(salloc(storage));
+	mem = salloc(storage);
 	if (mem)
 		ft_bzero_static(mem, storage);
 	return (mem);

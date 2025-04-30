@@ -1,6 +1,7 @@
 #ifndef SAFE_H
 #define SAFE_H
 
+# include <ft_printf.h>
 # include <libft.h>
 # include <stdarg.h>
 # include <stdlib.h>
@@ -80,4 +81,5 @@ void	sstring_split(t_sstring_array *array, t_sstring const *s, char c);
 void	sstring_split_with_slice(t_sstring_array *array, t_sstring const *s, const char *slice);
 void	panicf(const char *fmt, ...);
 void	*salloc_check(const void *mem);
+void	*malloc_checkd(size_t size);
 #endif // SAFE_H
